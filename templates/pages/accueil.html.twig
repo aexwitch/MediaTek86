@@ -1,9 +1,7 @@
 {% extends "basefront.html.twig" %}
 
 {% block body %}
-    <p class="mt-3">
-        <h3>Bienvenue sur le site de MediaTek86 consacré aux formations en ligne</h3>
-    </p>
+    <h3 class="mt-3">Bienvenue sur le site de MediaTek86 consacré aux formations en ligne</h3>
     <p class="mt-3">
         Vous allez pouvoir vous former à différents outils numériques gratuitement et directement en ligne.<br />
         Dans la partie <strong><a href="{{ path('formations') }}" class="link-info">Formations</a></strong>, vous trouverez la liste des formations proposées.
@@ -22,7 +20,7 @@
                                 <!-- emplacement photo -->
                                 {% if formation.picture %}
                                     <a href="{{ path('formations.showone', {id:formation.id}) }}">
-                                    <img src="{{ formation.picture }} alt="formation" 
+                                    <img src="{{ formation.picture }}  
                                          class="card-img-top" style="width:100%;height:auto;">
                                     </a>    
                                 {% endif %}
@@ -38,7 +36,8 @@
                                     {{ categorie.name }}&nbsp;
                                 {% endfor %}
                             </div>    
-                        </div>                    
+                        </div>    
+                    </td>                
                 {% endfor %}    
             </tr>
 
