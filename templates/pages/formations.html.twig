@@ -75,11 +75,7 @@
                         {{ formation.publishedatstring }}
                     </td>
                     <td class="text-center">
-                        {% if formation.miniature %}
-                            <a href="{{ path('formations.showone', {id:formation.id}) }}">
-                                <img src="{{ formation.miniature }}">
-                            </a>
-                        {% endif %}
+                        {% include 'partials/_miniature.html.twig' with { formation: formation } %}
                     </td>
                 </tr>
             {% endfor %}

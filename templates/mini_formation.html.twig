@@ -1,0 +1,7 @@
+{% extends "base.html.twig" %}
+
+{% if formation.miniature %}
+    <a href="{{ path('formations.showone', { id: formation.id }) }}">
+        <img src="{{ formation.miniature }}" alt="Miniature de la formation">
+    </a>
+{% endif %}
