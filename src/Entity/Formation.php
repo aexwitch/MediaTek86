@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace src\Entity;
 
 use App\Repository\FormationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -69,8 +69,8 @@ class Formation
         if($this->publishedAt === null){
             return "";
         }
-        return $this->publishedAt->format('d/m/Y');     
-    }      
+        return $this->publishedAt->format('d/m/Y');
+    }
     
     public function getTitle(): ?string
     {
