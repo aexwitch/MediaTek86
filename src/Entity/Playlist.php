@@ -1,6 +1,7 @@
+
 <?php
 
-namespace App\Entity;
+namespace src\Entity;
 
 use App\Repository\PlaylistRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -82,10 +83,9 @@ class Playlist
 
     public function removeFormation(Formation $formation): static
     {
-        if ($this->formations->removeElement($formation)) {
-            if ($formation->getPlaylist() === $this) {
-                $formation->setPlaylist(null);
-            }
+        if (($this->formations->removeElement($formation)) && ($formation->getPlaylist() === $this)) {
+            $formation->setPlaylist(null);
+            
         }
 
         return $this;

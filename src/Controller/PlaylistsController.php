@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace src\Controller;
 
 use App\Repository\CategorieRepository;
 use App\Repository\FormationRepository;
@@ -58,6 +58,7 @@ class PlaylistsController extends AbstractController {
 
     #[Route('/playlists/tri/{champ}/{ordre}', name: 'playlists.sort')]
     public function sort($champ, $ordre): Response{
+        $playlists = [];
         switch($champ){
             case "name":
                 $playlists = $this->playlistRepository->findAllOrderByName($ordre);

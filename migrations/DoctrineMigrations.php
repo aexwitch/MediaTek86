@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DoctrineMigrations;
+namespace migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240513134621 extends AbstractMigration
+final class DoctrineMigrations extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -42,4 +42,5 @@ final class Version20240513134621 extends AbstractMigration
         $this->addSql('DROP TABLE playlist');
         $this->addSql('DROP TABLE messenger_messages');
     }
+    
 }

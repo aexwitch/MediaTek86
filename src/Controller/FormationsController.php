@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace src\Controller;
 
 use App\Repository\CategorieRepository;
 use App\Repository\FormationRepository;
@@ -71,6 +71,7 @@ class FormationsController extends AbstractController {
         return $this->render("pages/formation.html.twig", [
             'formation' => $formation
         ]);        
-    }   
+    }
+
     
 }
