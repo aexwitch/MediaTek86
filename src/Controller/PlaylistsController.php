@@ -1,9 +1,9 @@
 <?php
 namespace src\Controller;
 
-use App\Repository\CategorieRepository;
-use App\Repository\FormationRepository;
-use App\Repository\PlaylistRepository;
+use src\Repository\CategorieRepository;
+use src\Repository\FormationRepository;
+use src\Repository\PlaylistRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,24 +17,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlaylistsController extends AbstractController {
     
     /**
-     * 
+     *
      * @var PlaylistRepository
      */
     private $playlistRepository;
     
     /**
-     * 
+     *
      * @var FormationRepository
      */
     private $formationRepository;
     
     /**
-     * 
+     *
      * @var CategorieRepository
      */
-    private $categorieRepository;    
+    private $categorieRepository;
     
-    function __construct(PlaylistRepository $playlistRepository, 
+    function __construct(PlaylistRepository $playlistRepository,
             CategorieRepository $categorieRepository,
             FormationRepository $formationRespository) {
         $this->playlistRepository = $playlistRepository;
@@ -46,43 +46,55 @@ class PlaylistsController extends AbstractController {
      * @Route("/playlists", name="playlists")
      * @return Response
      */
+function renderPlaylists(array $playlists, array $extraParams = []): Response
+{
+    $categories = $this->categorieRepository->findAll();
+
+    return $this->render("pages/playlists.html.twig", array_merge([
+        'playlists' => $playlists,
+        'categories' => $categories
+    ], $extraParams));
+}
+
     #[Route('/playlists', name: 'playlists')]
-    public function index(): Response{
-        $playlists = $this->playlistRepository->findAllOrderByName('ASC');
-        $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
-            'playlists' => $playlists,
-            'categories' => $categories            
-        ]);
-    }
+    public function index(): Response
+{
+    $playlists = $this->playlistRepository->findAllOrderByName('ASC');
+    return $this->renderPlaylists($playlists);
+}
+
 
     #[Route('/playlists/tri/{champ}/{ordre}', name: 'playlists.sort')]
-    public function sort($champ, $ordre): Response{
-        $playlists = [];
-        switch($champ){
-            case "name":
-                $playlists = $this->playlistRepository->findAllOrderByName($ordre);
-                break;
-        }
-        $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
-            'playlists' => $playlists,
-            'categories' => $categories            
-        ]);
-    }          
+    public function sort($champ, $ordre): Response
+{
+    $playlists = [];
+
+    switch($champ){
+        case "name":
+            $playlists = $this->playlistRepository->findAllOrderByName($ordre);
+        break;
+            default:
+        // Code par défaut ou gestion d'erreur
+            break;
+    }
+
+    return $this->renderPlaylists($playlists);
+}
+
 
     #[Route('/playlists/recherche/{champ}/{table}', name: 'playlists.findallcontain')]
-    public function findAllContain($champ, Request $request, $table=""): Response{
-        $valeur = $request->get("recherche");
-        $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
-        $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
-            'playlists' => $playlists,
-            'categories' => $categories,            
-            'valeur' => $valeur,
-            'table' => $table
-        ]);
-    }  
+    public function findAllContain($champ, Request $request, $table=""): Response
+{
+    $valeur = $request->get("recherche");
+    $playlists = $this->playlistRepository
+        ->findByContainValue($champ, $valeur, $table);
+
+    return $this->renderPlaylists($playlists, [
+        'valeur' => $valeur,
+        'table' => $table
+    ]);
+}
+
 
     #[Route('/playlists/playlist/{id}', name: 'playlists.showone')]
     public function showOne($id): Response{
@@ -93,7 +105,7 @@ class PlaylistsController extends AbstractController {
             'playlist' => $playlist,
             'playlistcategories' => $playlistCategories,
             'playlistformations' => $playlistFormations
-        ]);        
-    }       
+        ]);
+    }
     
 }

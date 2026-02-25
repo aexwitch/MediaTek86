@@ -19,7 +19,7 @@ final class DoctrineMigrations extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
+        // $schema is unused because we use addSql() statements.
         $this->addSql('CREATE TABLE categorie (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(50) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE formation (id INT AUTO_INCREMENT NOT NULL, playlist_id INT DEFAULT NULL, published_at DATETIME DEFAULT NULL, title VARCHAR(100) DEFAULT NULL, description LONGTEXT DEFAULT NULL, video_id VARCHAR(20) DEFAULT NULL, INDEX IDX_404021BF6BBD148 (playlist_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE formation_categorie (formation_id INT NOT NULL, categorie_id INT NOT NULL, INDEX IDX_830086E95200282E (formation_id), INDEX IDX_830086E9BCF5E72D (categorie_id), PRIMARY KEY(formation_id, categorie_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -32,7 +32,7 @@ final class DoctrineMigrations extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
+        // $schema is unused because we use addSql() statements.
         $this->addSql('ALTER TABLE formation DROP FOREIGN KEY FK_404021BF6BBD148');
         $this->addSql('ALTER TABLE formation_categorie DROP FOREIGN KEY FK_830086E95200282E');
         $this->addSql('ALTER TABLE formation_categorie DROP FOREIGN KEY FK_830086E9BCF5E72D');

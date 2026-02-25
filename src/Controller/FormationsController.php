@@ -1,8 +1,8 @@
 <?php
 namespace src\Controller;
 
-use App\Repository\CategorieRepository;
-use App\Repository\FormationRepository;
+use src\Repository\CategorieRepository;
+use src\Repository\FormationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,13 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class FormationsController extends AbstractController {
 
     /**
-     * 
+     *
      * @var FormationRepository
      */
     private $formationRepository;
     
     /**
-     * 
+     *
      * @var CategorieRepository
      */
     private $categorieRepository;
@@ -31,6 +31,15 @@ class FormationsController extends AbstractController {
         $this->formationRepository = $formationRepository;
         $this->categorieRepository= $categorieRepository;
     }
+    function renderFormations(array $formations, array $extraParams = []): Response
+{
+    $categories = $this->categorieRepository->findAll();
+
+    return $this->render("pages/formations.html.twig", array_merge([
+        '$formations' => $formations,
+        'categories' => $categories
+    ], $extraParams));
+}
     
     #[Route('/formations', name: 'formations')]
     public function index(): Response{
@@ -50,7 +59,7 @@ class FormationsController extends AbstractController {
             'formations' => $formations,
             'categories' => $categories
         ]);
-    }     
+    }
 
     #[Route('/formations/recherche/{champ}/{table}', name: 'formations.findallcontain')]
     public function findAllContain($champ, Request $request, $table=""): Response{
